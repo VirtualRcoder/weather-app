@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import SearchBar from "./components/SearchBar";
+import TodayWeather from "./components/TodayWeather";
+import WeeklyWeather from "./components/WeeklyWeather";
+import { useEffect, useState } from "react";
+import { Box, styled, InputBase, List, TextField, Button } from "@mui/material";
 
 function App() {
+  let [latitude, setLatitude] = useState("");
+  let [longitude, setLongitude] = useState("");
+
+  const handleSearch = (location) => {
+    try {
+      setLatitude(location.lat);
+      setLongitude(location.lon);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLatitude(position.coords.latitude);
+      setLongitude(position.coords.longitude);
+    });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box
+      paddingTop="2vh"
+      paddingBottom="42vh"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      color="Black"
+    >
+      <SearchBar handleSearch={handleSearch} />
+      <TodayWeather />
+      <WeeklyWeather />
+    </Box>
   );
 }
 
