@@ -37,8 +37,8 @@ function App() {
       color="Black"
     >
       <SearchBar handleSearch={handleSearch} />
-      <TodayWeather />
-      <WeeklyWeather />
+      <TodayWeather latitude={latitude} longitude={longitude} />
+      <WeeklyWeather latitude={latitude} longitude={longitude} />
     </Box>
   );
 }

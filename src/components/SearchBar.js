@@ -28,7 +28,7 @@ export default function SearchBar({ handleSearch }) {
   }, [city]);
 
   return (
-    <Box>
+    <Box sx={{ marginLeft: "40px" }}>
       <TextField
         placeholder="Enter the Location"
         value={tex}

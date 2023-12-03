@@ -20,192 +20,198 @@ export default function TodayWeather({ latitude, longitude }) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setName(data.name);
-        setMain(data.main);
-        setWeather(data.weather[0]);
-        setWind(data.wind); //name, main, weather, wind
+        if (data.weather) {
+          setName(data.name);
+          setMain(data.main);
+          setWeather(data.weather[0]);
+          setWind(data.wind); //name, main, weather, wind
+        }
       });
   }, [latitude, longitude]);
 
-  return (
-    <Box
-      width="300px"
-      borderRadius="6px"
-      boxShadow="10px -2px 20px 2px rgb(0 0 0 / 30%)"
-      color="#fff"
-      backgroundColor="#333"
-      margin="20px auto 0 auto"
-      padding="0 20px 20px 20px"
-    >
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Box>
+  if (name) {
+    return (
+      <Box
+        width="300px"
+        borderRadius="6px"
+        boxShadow="10px -2px 20px 2px rgb(0 0 0 / 30%)"
+        color="#fff"
+        backgroundColor="#333"
+        margin="20px auto 0 auto"
+        padding="0 20px 20px 20px"
+      >
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box>
+            <p
+              style={{
+                fontWeight: 600,
+                fontSize: "18px",
+                lineHeight: 1,
+                margin: 0,
+                letterSpacing: "1px",
+              }}
+            >
+              {name}
+            </p>
+
+            <p
+              style={{
+                fontWeight: 400,
+                fontSize: "14px",
+                lineHeigh: 1,
+                margin: 0,
+              }}
+            >
+              {weather.description}, {weather.icon}
+            </p>
+          </Box>
+          <img
+            style={{
+              width: "100px",
+            }}
+            alt="weather"
+            src={`icons/${weather.icon}.png`}
+          />
+        </Box>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
           <p
             style={{
               fontWeight: 600,
-              fontSize: "18px",
-              lineHeight: 1,
-              margin: 0,
-              letterSpacing: "1px",
+              fontSize: "60px",
+              weight: "auto",
+              letterSpacing: "-5px",
+              margin: "10px 0",
             }}
           >
-            {name}
+            {main.temp}°C
           </p>
-
-          <p
-            style={{
-              fontWeight: 400,
-              fontSize: "14px",
-              lineHeigh: 1,
-              margin: 0,
-            }}
-          >
-            {weather.description}, {weather.icon}
-          </p>
-        </Box>
-        <img
-          style={{
-            width: "100px",
-          }}
-          alt="weather"
-          src={`icons/${weather.icon}.png`}
-        />
-      </Box>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <p
-          style={{
-            fontWeight: 600,
-            fontSize: "60px",
-            weight: "auto",
-            letterSpacing: "-5px",
-            margin: "10px 0",
-          }}
-        >
-          {main.temp}°C
-        </p>
-        <Box
-          style={{
-            width: "100%",
-            paddingLeft: "20px",
-          }}
-        >
           <Box
             style={{
-              display: "flex",
-              justifyContent: "space-between",
+              width: "100%",
+              paddingLeft: "20px",
             }}
           >
-            <span
+            <Box
               style={{
-                textAlign: "left",
-                fontWeight: 400,
-                fontSize: "12px",
+                display: "flex",
+                justifyContent: "space-between",
               }}
             >
-              Details
-            </span>
-          </Box>
-          <Box
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span
+              <span
+                style={{
+                  textAlign: "left",
+                  fontWeight: 400,
+                  fontSize: "12px",
+                }}
+              >
+                Details
+              </span>
+            </Box>
+            <Box
               style={{
-                textAlign: "left",
-                fontWeight: 400,
-                fontSize: "12px",
+                display: "flex",
+                justifyContent: "space-between",
               }}
             >
-              Feels like
-            </span>
-            <span
+              <span
+                style={{
+                  textAlign: "left",
+                  fontWeight: 400,
+                  fontSize: "12px",
+                }}
+              >
+                Feels like
+              </span>
+              <span
+                style={{
+                  textAlign: "right",
+                  fontWeight: 600,
+                  fontSize: "12px",
+                }}
+              >
+                {main.feels_like} C
+              </span>
+            </Box>
+            <Box
               style={{
-                textAlign: "right",
-                fontWeight: 600,
-                fontSize: "12px",
+                display: "flex",
+                justifyContent: "space-between",
               }}
             >
-              {main.feels_like} C
-            </span>
-          </Box>
-          <Box
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span
+              <span
+                style={{
+                  textAlign: "left",
+                  fontWeight: 400,
+                  fontSize: "12px",
+                }}
+              >
+                Wind
+              </span>
+              <span
+                style={{
+                  textAlign: "right",
+                  fontWeight: 600,
+                  fontSize: "12px",
+                }}
+              >
+                {wind.speed} m/s
+              </span>
+            </Box>
+            <Box
               style={{
-                textAlign: "left",
-                fontWeight: 400,
-                fontSize: "12px",
+                display: "flex",
+                justifyContent: "space-between",
               }}
             >
-              Wind
-            </span>
-            <span
+              <span
+                style={{
+                  textAlign: "left",
+                  fontWeight: 400,
+                  fontSize: "12px",
+                }}
+              >
+                Humidity
+              </span>
+              <span
+                style={{
+                  textAlign: "right",
+                  fontWeight: 600,
+                  fontSize: "12px",
+                }}
+              >
+                {main.humidity}%
+              </span>
+            </Box>
+            <Box
               style={{
-                textAlign: "right",
-                fontWeight: 600,
-                fontSize: "12px",
+                display: "flex",
+                justifyContent: "space-between",
               }}
             >
-              {wind.speed} m/s
-            </span>
-          </Box>
-          <Box
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span
-              style={{
-                textAlign: "left",
-                fontWeight: 400,
-                fontSize: "12px",
-              }}
-            >
-              Humidity
-            </span>
-            <span
-              style={{
-                textAlign: "right",
-                fontWeight: 600,
-                fontSize: "12px",
-              }}
-            >
-              {main.humidity}%
-            </span>
-          </Box>
-          <Box
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span
-              style={{
-                textAlign: "left",
-                fontWeight: 400,
-                fontSize: "12px",
-              }}
-            >
-              Pressure
-            </span>
-            <span
-              style={{
-                textAlign: "right",
-                fontWeight: 600,
-                fontSize: "12px",
-              }}
-            >
-              {main.pressure} hPa
-            </span>
+              <span
+                style={{
+                  textAlign: "left",
+                  fontWeight: 400,
+                  fontSize: "12px",
+                }}
+              >
+                Pressure
+              </span>
+              <span
+                style={{
+                  textAlign: "right",
+                  fontWeight: 600,
+                  fontSize: "12px",
+                }}
+              >
+                {main.pressure} hPa
+              </span>
+            </Box>
           </Box>
         </Box>
       </Box>
-    </Box>
-  );
+    );
+  } else {
+    return <>Loading</>;
+  }
 }
